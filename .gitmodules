@@ -1,0 +1,3 @@
+[submodule "libxwing"]
+	path = libxwing
+	url = https://github.com/sirjorj/libxwing.git
