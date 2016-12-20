@@ -19,3 +19,4 @@ Uses:
 
 Requires:
   libgd (package manager for unix, homebrew for OS X, not yet sure for windows)
+  xwing-miniatures-font (https://github.com/geordanr/xwing-miniatures-font)
