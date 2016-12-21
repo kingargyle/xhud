@@ -116,7 +116,8 @@ bool Game::ParseCommand(std::string cmd) {
     case PState::GetUpgradeCommand:
       switch(c) {
 	case 'e': this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Disable(); break;
-	case 'E': this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Enable(); break;
+	case 'E': this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Enable();  break;
+        case ' ': ps = PState::GetPlayer;                                                                         break;
       }
       break;
     }
