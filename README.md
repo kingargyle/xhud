@@ -29,7 +29,7 @@ Setup
   - dev environment
     - from terminal, run 'git' to trigger OS X to install the command line dev tools - XCode NOT required!
   - libgd
-    - install homebrew from brew.sh (just copy the string on the front page and run it in terminal)
+    - install homebrew from http://brew.sh (just copy the string on the front page and run it in terminal)
     - install libgd (the graphics drawing library) with 'brew install gd'
 
 Get Code
