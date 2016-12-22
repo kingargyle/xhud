@@ -223,7 +223,7 @@ static int DrawPilot(gdImagePtr img, Pilot& pilot, int yOffset, ColorPalette con
 
 void GenerateImage(Squad& squad, std::string name) {
   gdImagePtr img;
-  FILE *out = fopen(name.c_str(), "wb");
+  FILE *out = fopen((name+".tmp").c_str(), "wb");
   if(out == 0) {
     printf("error opening file");
     return;
@@ -284,8 +284,10 @@ void GenerateImage(Squad& squad, std::string name) {
 
   // save the image
   gdImagePng(img, out);
+  fclose(out);
+  rename((name+".tmp").c_str(), name.c_str());
 
   // clean up
-  fclose(out);  
+
   gdImageDestroy(img);  
 }
