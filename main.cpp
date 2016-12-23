@@ -69,6 +69,13 @@ int main(int argc, char *argv[]) {
     sq.Dump();
   }
 
+  else if((strcmp(argv[1], "verify") == 0) && (argc==3)) {
+    Squad sq = Squad(argv[2]);
+    if(sq.Verify()) {
+      printf("Ok - '%s' is valid\n", sq.GetName().c_str());
+    }
+  }
+
   else if((strcmp(argv[1], "gen") == 0) && (argc==4)) {
     Squad sq = Squad(argv[2]);
     GenerateImage(sq, argv[3]);
