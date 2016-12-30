@@ -11,7 +11,8 @@
 static void printOptions() {
     printf("Options:\n");
     printf("  check         - check for required files\n");;
-    printf("  gen {L} {I}   - generate image I for the list L\n");
+    printf("  verify (L)    - verify the list (L)\n");
+    printf("  gen {L} {I}   - generate image (I) for the list (L)\n");
     printf("  run {L1} {L2} - run a game with the 2 specified lists\n");
 }
 
@@ -70,16 +71,23 @@ int main(int argc, char *argv[]) {
   }
 
   else if((strcmp(argv[1], "verify") == 0) && (argc==3)) {
-    Squad sq = Squad(argv[2]);
-    printf("Testing '%s' (%s)...", argv[2], sq.GetName().c_str());
-    std::vector<std::string> issues = sq.Verify();
-    if(issues.size() == 0) {
-      printf("Ok\n");
-    } else {
-      printf("INVALID!\n");
-      for(std::string s : issues) {
-	printf("  %s\n", s.c_str());
+    printf("Testing %-36s - ", argv[2]);
+    fflush(stdout);
+    try {    
+      Squad sq = Squad(argv[2]);
+      std::vector<std::string> issues = sq.Verify();
+      if(issues.size() == 0) {
+	printf("Ok\n");
+      } else {
+	printf("INVALID\n");
+	for(std::string s : issues) {
+	  printf("  \e[1;31m%s\x1B[0m\n", s.c_str());
+	}
       }
+    }
+    catch(std::invalid_argument e) {
+      printf("EXCEPTION\n");
+      printf("  \e[1;31m%s\x1B[0m\n", e.what());
     }
   }
 

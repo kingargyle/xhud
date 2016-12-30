@@ -1,0 +1,24 @@
+{
+  "description": "BAD - Heavy Scyk with 2 upgrades",
+  "faction": "scum", 
+  "name": "Heavy Scyk bad - 2 upgrades", 
+  "pilots": [
+    {
+      "name": "cartelspacer", 
+      "points": 17, 
+      "ship": "m3ainterceptor", 
+      "upgrades": {
+        "cannon": [
+          "tractorbeam"
+        ],
+        "missile": [
+          "concussionmissiles"
+        ],
+        "title": [
+          "heavyscykinterceptor"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

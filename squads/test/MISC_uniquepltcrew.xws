@@ -1,0 +1,23 @@
+{
+  "description": "BAD - Unique pilot and crew", 
+  "faction": "rebel", 
+  "name": "", 
+  "pilots": [
+    {
+      "name": "lukeskywalker", 
+      "points": 28, 
+      "ship": "xwing"
+    }, 
+    {
+      "name": "hansolo", 
+      "points": 51, 
+      "ship": "yt1300", 
+      "upgrades": {
+        "crew": [
+          "lukeskywalker"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

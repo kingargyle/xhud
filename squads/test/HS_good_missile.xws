@@ -1,0 +1,21 @@
+{
+  "description": "GOOD - Heavy Scyk with Missile",
+  "faction": "scum", 
+  "name": "Heavy Scyk good - missile", 
+  "pilots": [
+    {
+      "name": "cartelspacer", 
+      "points": 17, 
+      "ship": "m3ainterceptor", 
+      "upgrades": {
+        "missile": [
+          "concussionmissiles"
+        ], 
+        "title": [
+          "heavyscykinterceptor"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

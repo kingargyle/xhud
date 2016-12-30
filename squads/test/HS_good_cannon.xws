@@ -1,0 +1,21 @@
+{
+  "description": "Good - Heavy Scyk with Cannon",
+  "faction": "scum", 
+  "name": "Heavy Scyk good - Cannon", 
+  "pilots": [
+    {
+      "name": "cartelspacer", 
+      "points": 17, 
+      "ship": "m3ainterceptor", 
+      "upgrades": {
+        "cannon": [
+          "tractorbeam"
+        ], 
+        "title": [
+          "heavyscykinterceptor"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

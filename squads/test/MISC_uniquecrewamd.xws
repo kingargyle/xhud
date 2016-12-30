@@ -1,0 +1,28 @@
+{
+  "description": "BAD - Unique crew and astromech in use",
+  "faction": "rebel",
+  "name": "",
+  "pilots": [
+    {
+      "name": "hansolo", 
+      "points": 50, 
+      "ship": "yt1300", 
+      "upgrades": {
+        "crew": [
+          "r2d2-swx22"
+        ]
+      }
+    }, 
+    {
+      "name": "lukeskywalker", 
+      "points": 31, 
+      "ship": "xwing", 
+      "upgrades": {
+        "amd": [
+          "r2d2"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}
