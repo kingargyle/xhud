@@ -71,8 +71,15 @@ int main(int argc, char *argv[]) {
 
   else if((strcmp(argv[1], "verify") == 0) && (argc==3)) {
     Squad sq = Squad(argv[2]);
-    if(sq.Verify()) {
-      printf("Ok - '%s' is valid\n", sq.GetName().c_str());
+    printf("Testing '%s' (%s)...", argv[2], sq.GetName().c_str());
+    std::vector<std::string> issues = sq.Verify();
+    if(issues.size() == 0) {
+      printf("Ok\n");
+    } else {
+      printf("INVALID!\n");
+      for(std::string s : issues) {
+	printf("  %s\n", s.c_str());
+      }
     }
   }
 
