@@ -1,0 +1,36 @@
+{
+  "description": "", 
+  "faction": "rebel", 
+  "name": "Unnamed Squadron", 
+  "pilots": [
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }
+  ], 
+  "points": 108, 
+  "vendor": {
+    "yasb": {
+      "builder": "(Yet Another) X-Wing Miniatures Squad Builder", 
+      "builder_url": "http://geordanr.github.io/xwing/", 
+      "link": "http://geordanr.github.io/xwing/?f=Rebel%20Alliance&d=v4!s!33:-1,-1:-1:-1:;33:-1,-1:-1:-1:;33:-1,-1:-1:-1:;33:-1,-1:-1:-1:&sn=Unnamed%20Squadron"
+    }
+  }, 
+  "version": "0.3.0"
+}

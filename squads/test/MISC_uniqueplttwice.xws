@@ -1,0 +1,18 @@
+{
+  "description": "Unique pilot used twice",
+  "faction": "rebel", 
+  "name": "", 
+  "pilots": [
+    {
+      "name": "lukeskywalker", 
+      "points": 28, 
+      "ship": "xwing"
+    }, 
+    {
+      "name": "lukeskywalker", 
+      "points": 28, 
+      "ship": "xwing"
+    }
+  ], 
+  "version": "1.0.0"
+}

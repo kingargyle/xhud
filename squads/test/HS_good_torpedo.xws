@@ -1,0 +1,21 @@
+{
+  "description": "GOOD - Heavy Scyk with Torpedo",
+  "faction": "scum", 
+  "name": "Heavy Scyk good - torpedo", 
+  "pilots": [
+    {
+      "name": "cartelspacer", 
+      "points": 17, 
+      "ship": "m3ainterceptor", 
+      "upgrades": {
+        "torpedo": [
+          "protontorpedoes"
+        ],
+        "title": [
+          "heavyscykinterceptor"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}
