@@ -1,29 +1,22 @@
 # xhud
 Overlay image generator for live streaming X-Wing Miniatures.
 
+**Does:**
+* Dumps squad info from an xws file.
+* Generates squad image from xws file.
+* Runs a game from 2 xws files and allows manipulation (add/remove shields/hull, enable/disable upgrades/ships).
 
+**Does Not (yet):**
+* Have a particularly user-friendly UI.
 
-Does:
-  Dumps squad info from an xws file.
-  Generates squad image from xws file.
-  Runs a game from 2 xws files and allows manipulation (add/remove shields/hull, enable/disable upgrades/ships).
+**Uses:**
+* libxwing (my other project)
 
+**Requires:**
+* libgd (package manager for unix, homebrew for OS X, not yet sure for windows)
+* xwing-miniatures-font (https://github.com/geordanr/xwing-miniatures-font)
 
-Does Not (yet):
-  Have a particularly user-friendly UI.
-
-
-Uses:
-  libxwing (my other project)
-
-
-Requires:
-  libgd (package manager for unix, homebrew for OS X, not yet sure for windows)
-  xwing-miniatures-font (https://github.com/geordanr/xwing-miniatures-font)
-
-
-
-*** Getting Started ***
+***Getting Started***
 
 Setup
   - dev environment
