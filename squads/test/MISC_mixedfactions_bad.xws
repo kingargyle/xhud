@@ -1,7 +1,7 @@
 {
-  "description": "", 
+  "description": "BAD - mixed factions", 
   "faction": "rebel", 
-  "name": "Bombs & TLTs", 
+  "name": "", 
   "pilots": [
     {
       "name": "wardensquadronpilot", 
@@ -64,13 +64,5 @@
       }
     }
   ], 
-  "points": 100, 
-  "vendor": {
-    "yasb": {
-      "builder": "(Yet Another) X-Wing Miniatures Squad Builder", 
-      "builder_url": "http://geordanr.github.io/xwing/", 
-      "link": "http://geordanr.github.io/xwing/?f=Rebel%20Alliance&d=v4!s!142:135,126,-1,-1,139,127,-1:-1:16:;142:135,126,-1,-1,139,127,-1:-1:16:;9:135,-1,-1,-1:-1:-1:&sn=Bombs%20%26%20TLTs"
-    }
-  }, 
-  "version": "0.3.0"
+  "version": "1.0.0"
 }

@@ -1,0 +1,28 @@
+{
+  "description": "GOOD - 2 ships with limited", 
+  "faction": "rebel", 
+  "name": "", 
+  "pilots": [
+    {
+      "name": "wardensquadronpilot", 
+      "points": 25, 
+      "ship": "kwing", 
+      "upgrades": {
+        "torpedo": [
+          "extramunitions"
+        ]
+      }
+    }, 
+    {
+      "name": "wardensquadronpilot", 
+      "points": 25, 
+      "ship": "kwing", 
+      "upgrades": {
+        "torpedo": [
+          "extramunitions"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

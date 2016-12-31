@@ -1,0 +1,19 @@
+{
+  "description": "BAD - 2 limited upgrades on 1 ship", 
+  "faction": "rebel", 
+  "name": "", 
+  "pilots": [
+    {
+      "name": "wardensquadronpilot", 
+      "points": 27, 
+      "ship": "kwing", 
+      "upgrades": {
+        "torpedo": [
+          "extramunitions", 
+          "extramunitions"
+        ]
+      }
+    }
+  ], 
+  "version": "1.0.0"
+}

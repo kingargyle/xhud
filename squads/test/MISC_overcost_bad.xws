@@ -1,0 +1,28 @@
+{
+  "description": "BAD - squad is 108 points", 
+  "faction": "rebel", 
+  "name": "", 
+  "pilots": [
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }, 
+    {
+      "name": "outerrimsmuggler", 
+      "points": 27, 
+      "ship": "yt1300"
+    }
+  ], 
+  "version": "1.0.0"
+}
