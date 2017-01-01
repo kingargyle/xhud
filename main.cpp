@@ -48,6 +48,35 @@ static void checkFiles() {
 
 
 
+bool VerifyList(std::string listFile) {
+  printf("Verifying %-36s - ", listFile.c_str());
+  fflush(stdout);
+  try {    
+    Squad sq = Squad(listFile);
+    std::vector<std::string> issues = sq.Verify();
+    if(issues.size() == 0) {
+      printf("Ok\n");
+    } else {
+      printf("INVALID\n");
+      for(std::string s : issues) {
+	printf("  \e[1;31m%s\x1B[0m\n", s.c_str());
+      }
+    }
+    if(issues.size() > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+  catch(std::invalid_argument e) {
+    printf("EXCEPTION\n");
+    printf("  \e[1;31m%s\x1B[0m\n", e.what());
+    return false;
+  }
+}
+
+
+
 int main(int argc, char *argv[]) {
 
   if(argc == 1) {
@@ -71,24 +100,7 @@ int main(int argc, char *argv[]) {
   }
 
   else if((strcmp(argv[1], "verify") == 0) && (argc==3)) {
-    printf("Testing %-36s - ", argv[2]);
-    fflush(stdout);
-    try {    
-      Squad sq = Squad(argv[2]);
-      std::vector<std::string> issues = sq.Verify();
-      if(issues.size() == 0) {
-	printf("Ok\n");
-      } else {
-	printf("INVALID\n");
-	for(std::string s : issues) {
-	  printf("  \e[1;31m%s\x1B[0m\n", s.c_str());
-	}
-      }
-    }
-    catch(std::invalid_argument e) {
-      printf("EXCEPTION\n");
-      printf("  \e[1;31m%s\x1B[0m\n", e.what());
-    }
+    VerifyList(argv[2]);
   }
 
   else if((strcmp(argv[1], "gen") == 0) && (argc==4)) {
@@ -99,6 +111,7 @@ int main(int argc, char *argv[]) {
   else if((strcmp(argv[1], "run") == 0) && (argc==4)) {
     std::string f1 = argv[2];
     std::string f2 = argv[3];
+    // make sure the lists exist
     if(!fileExists(f1)) {
       printf("ERROR: list not found - '%s'\n", f1.c_str());
       return 1;
@@ -107,6 +120,10 @@ int main(int argc, char *argv[]) {
       printf("ERROR: list not found - '%s'\n", f2.c_str());
       return 1;
     }
+    // verify the lists
+    VerifyList(f1);
+    VerifyList(f2);
+    // run the game
     try{
       std::array<Squad, 2> players = { { Squad(f1), Squad(f2) } };
       Game g = Game(players);
