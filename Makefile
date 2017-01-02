@@ -12,7 +12,7 @@ INCDIR= -I/usr/local/include
 all: xhud
 
 xhud: main.cpp imagegen.o game.o ./libxwing/libxwing.a
-	$(CPP) $(CPPFLAGS) $(INCDIR) -v main.cpp -o xhud ./imagegen.o ./game.o -L/usr/local/lib -L/usr/X11R6/lib -lsqlite3 -lm -lgd ./libxwing/libxwing.a
+	$(CPP) $(CPPFLAGS) $(INCDIR) -v main.cpp -o xhud ./imagegen.o ./game.o -L/usr/local/lib -L/usr/X11R6/lib -lm -lgd ./libxwing/libxwing.a
 
 #xwinglist.o: xwinglist.cpp xwinglist.h
 #	$(CPP) $(CPPFLAGS) $(NOLINK) $(DEBUG) xwinglist.cpp -o xwinglist.o
