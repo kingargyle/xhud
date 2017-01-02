@@ -1,6 +1,5 @@
 #include "imagegen.h"
 #include "game.h"
-#include <sys/mman.h>
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <fstream>
