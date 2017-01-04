@@ -100,13 +100,14 @@ bool Game::ParseCommand(std::string cmd) {
 	}
 	ps = PState::GetUpgradeCommand;
       } else {
+	std::string pn = this->players[pt.player-1].GetPilots()[pt.ship-1].GetPilotName();
 	switch(c) {
-	case 's': this->players[pt.player-1].GetPilots()[pt.ship-1].ShieldDn(); break;
-	case 'S': this->players[pt.player-1].GetPilots()[pt.ship-1].ShieldUp(); break;
-	case 'h': this->players[pt.player-1].GetPilots()[pt.ship-1].HullDn();   break;
-	case 'H': this->players[pt.player-1].GetPilots()[pt.ship-1].HullUp();   break;
-	case 'e': this->players[pt.player-1].GetPilots()[pt.ship-1].Disable();  break;
-	case 'E': this->players[pt.player-1].GetPilots()[pt.ship-1].Enable();   break;
+	case 's': this->players[pt.player-1].GetPilots()[pt.ship-1].ShieldDn(); printf("  Player %d - Ship %d (%s) - Shield Down\n", pt.player, pt.ship, pn.c_str()); break;
+	case 'S': this->players[pt.player-1].GetPilots()[pt.ship-1].ShieldUp(); printf("  Player %d - Ship %d (%s) - Shield Up\n",   pt.player, pt.ship, pn.c_str()); break;
+	case 'h': this->players[pt.player-1].GetPilots()[pt.ship-1].HullDn();   printf("  Player %d - Ship %d (%s) - Hull Down\n",   pt.player, pt.ship, pn.c_str()); break;
+	case 'H': this->players[pt.player-1].GetPilots()[pt.ship-1].HullUp();   printf("  Player %d - Ship %d (%s) - Hull Up\n",     pt.player, pt.ship, pn.c_str()); break;
+	case 'e': this->players[pt.player-1].GetPilots()[pt.ship-1].Disable();  printf("  Player %d - Ship %d (%s) - Disabled\n",    pt.player, pt.ship, pn.c_str()); break;
+	case 'E': this->players[pt.player-1].GetPilots()[pt.ship-1].Enable();   printf("  Player %d - Ship %d (%s) - Enabled\n",     pt.player, pt.ship, pn.c_str()); break;
 	case ' ': ps = PState::GetPlayer;                                       break;
 	  //case 'D': break;
 	}
@@ -114,10 +115,20 @@ bool Game::ParseCommand(std::string cmd) {
       break;
 
     case PState::GetUpgradeCommand:
+      std::string pn = this->players[pt.player-1].GetPilots()[pt.ship-1].GetPilotName();
+      std::string un = this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].GetUpgradeName();
       switch(c) {
-	case 'e': this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Disable(); break;
-	case 'E': this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Enable();  break;
-        case ' ': ps = PState::GetPlayer;                                                                         break;
+      case 'e':
+	this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Disable();
+	printf("  Player %d - Ship %d (%s) - Upgrade %d (%s) - Disabled\n", pt.player, pt.ship, pn.c_str(), pt.upgrade, un.c_str());
+	break;
+      case 'E':
+	this->players[pt.player-1].GetPilots()[pt.ship-1].GetAppliedUpgrades()[pt.upgrade-1].Enable();
+	printf("  Player %d - Ship %d (%s) - Upgrade %d (%s) - Enabled\n",  pt.player, pt.ship, pn.c_str(), pt.upgrade, un.c_str());
+	break;
+      case ' ':
+	ps = PState::GetPlayer;
+	break;
       }
       break;
     }
