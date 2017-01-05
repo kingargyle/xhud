@@ -1,15 +1,42 @@
-This directory requires the following fonts:
-
-Name                        MD5
-Bank Gothic Medium BT.ttf   1d9f2941c1cb3bc8eaf9ade805f14421
-kimberley bl.ttf   	    220201383c9a6a82662450169bf0dd71
-xwing-miniatures-ships.ttf  7f6e9e3eba8d769900ddb354d140cc0d
-xwing-miniatures.ttf	    f58ed777affa1da16143a572880056fb
+xhud requires 4 fonts to be in this directory.
+2 are included, and 2 are not.
 
 
+
+NOT INCLUDED:
+  Bank Gothic Medium BT.ttf
+  kimberley bl.ttf
 
 I don't know what the licensing for these fonts are but some are here:
 http://www.afewmaneuvers.com/topic/122-hi-res-photoshop-templates/
 
-And more are here:
-https://github.com/geordanr/xwing-miniatures-font
+
+
+INCLUDED:
+  xwing-miniatures-ships.ttf
+  xwing-miniatures.ttf
+
+Available here: https://github.com/geordanr/xwing-miniatures-font
+license :
+
+The MIT License (MIT)
+
+Copyright (c) 2014 Geordan Rosario
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
