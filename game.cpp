@@ -4,20 +4,20 @@
 #include <cctype>
 #include <iostream>
 
-Game::Game(std::array<Squad, 2>& p)
-  : players(p), isRunning(true) {
+Game::Game(std::array<Squad, 2>& p, std::string op)
+  : players(p), outPath(op), isRunning(true) {
 }
 
 void Game::Run() {
-  GenerateImage(this->players[0], "p1.png");
-  GenerateImage(this->players[1], "p2.png");
+  GenerateImage(this->players[0], this->outPath+"p1.png");
+  GenerateImage(this->players[1], this->outPath+"p2.png");
   do {
     std::string line;
     printf("xhud> ");
     std::getline(std::cin, line);
     if(this->ParseCommand(line)) {
-      GenerateImage(this->players[0], "p1.png");
-      GenerateImage(this->players[1], "p2.png");
+      GenerateImage(this->players[0], this->outPath+"/p1.png");
+      GenerateImage(this->players[1], this->outPath+"/p2.png");
     }
   } while(this->isRunning);
 }

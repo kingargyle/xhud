@@ -24,7 +24,8 @@ static bool fileExists(const std::string file) {
 
 
 
-static void checkFiles() {
+static bool checkFiles() {
+  bool ret = true;
   std::vector<std::pair<std::string, std::string>> fontFiles = {
     { "Bank Gothic Medium BT.ttf",  "1d9f2941c1cb3bc8eaf9ade805f14421" },
     { "kimberley bl.ttf",           "220201383c9a6a82662450169bf0dd71" },
@@ -41,8 +42,10 @@ static void checkFiles() {
       // maybe check md5's here as well...
     } else {
       printf("NOT FOUND!\n");
+      ret = false;
     }
   }
+  return ret;
 }
 
 
@@ -107,9 +110,19 @@ int main(int argc, char *argv[]) {
     GenerateImage(sq, argv[3]);
   }
 
-  else if((strcmp(argv[1], "run") == 0) && (argc==4)) {
+  else if((strcmp(argv[1], "run") == 0) && ((argc==4)||(argc==5))) {
+    // verify the environment
+    //if(!checkFiles()) {
+    //  return 0;
+    //}
+
     std::string f1 = argv[2];
     std::string f2 = argv[3];
+    std::string outpath;
+    if(argc==5) {
+      outpath = argv[4];
+    }
+
     // make sure the lists exist
     if(!fileExists(f1)) {
       printf("ERROR: list not found - '%s'\n", f1.c_str());
@@ -125,7 +138,7 @@ int main(int argc, char *argv[]) {
     // run the game
     try{
       std::array<Squad, 2> players = { { Squad(f1), Squad(f2) } };
-      Game g = Game(players);
+      Game g = Game(players, outpath);
       g.Run();
     }
     catch(std::invalid_argument ia) {
