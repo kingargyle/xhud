@@ -9,10 +9,10 @@
 
 static void printOptions() {
     printf("Options:\n");
-    printf("  check         - check for required files\n");;
-    printf("  verify (L)    - verify the list (L)\n");
-    printf("  gen {L} {I}   - generate image (I) for the list (L)\n");
-    printf("  run {L1} {L2} - run a game with the 2 specified lists\n");
+    printf("  check             - check for required files\n");;
+    printf("  verify (L)        - verify the list (L)\n");
+    printf("  gen {L} {I}       - generate image (I) for the list (L)\n");
+    printf("  run {L1} {L2} {P} - run a game with the 2 specified lists, outputting images to the specified path\n");
 }
 
 
@@ -110,7 +110,7 @@ int main(int argc, char *argv[]) {
     GenerateImage(sq, argv[3]);
   }
 
-  else if((strcmp(argv[1], "run") == 0) && ((argc==4)||(argc==5))) {
+  else if((strcmp(argv[1], "run") == 0) && (argc==5)) {
     // verify the environment
     //if(!checkFiles()) {
     //  return 0;
@@ -118,10 +118,7 @@ int main(int argc, char *argv[]) {
 
     std::string f1 = argv[2];
     std::string f2 = argv[3];
-    std::string outpath;
-    if(argc==5) {
-      outpath = argv[4];
-    }
+    std::string outpath = argv[4];
 
     // make sure the lists exist
     if(!fileExists(f1)) {
