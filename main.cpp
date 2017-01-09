@@ -24,26 +24,21 @@ static bool fileExists(const std::string file) {
 
 
 
-static bool checkFiles() {
-  bool ret = true;
-  std::vector<std::pair<std::string, std::string>> fontFiles = {
-    { "Bank Gothic Medium BT.ttf",  "1d9f2941c1cb3bc8eaf9ade805f14421" },
-    { "kimberley bl.ttf",           "220201383c9a6a82662450169bf0dd71" },
-    { "xwing-miniatures-ships.ttf", "7f6e9e3eba8d769900ddb354d140cc0d" },
-    { "xwing-miniatures.ttf",       "f58ed777affa1da16143a572880056fb" },
+static std::vector<std::pair<std::string,bool>> CheckFonts() {
+  std::vector<std::string> fontFiles = {
+    { "Bank Gothic Medium BT.ttf"  },
+    { "kimberley bl.ttf"           },
+    { "xwing-miniatures-ships.ttf" },
+    { "xwing-miniatures.ttf"       }
   };
-
-  printf("Looking for required font files...\n");
+  std::vector<std::pair<std::string,bool>> ret;
   for(auto ff : fontFiles) {
-    std::string filename = "./fonts/" + ff.first;
-    printf("  %-40s - ", filename.c_str());
+    std::string filename = "./fonts/" + ff;
+    bool hasIt = false;
     if(fileExists(filename)) {
-      printf("found\n");
-      // maybe check md5's here as well...
-    } else {
-      printf("NOT FOUND!\n");
-      ret = false;
+      hasIt = true;
     }
+    ret.push_back({ff, hasIt});
   }
   return ret;
 }
@@ -51,7 +46,7 @@ static bool checkFiles() {
 
 
 bool VerifyList(std::string listFile) {
-  printf("Verifying %-36s - ", listFile.c_str());
+  //printf("Verifying %-36s - ", listFile.c_str());
   fflush(stdout);
   try {    
     Squad sq = Squad(listFile);
@@ -86,7 +81,11 @@ int main(int argc, char *argv[]) {
   }
 
   else if(strcmp(argv[1], "check") == 0) {
-    checkFiles();
+    printf("Checking for required fonts...\n");
+    std::vector<std::pair<std::string,bool>> cf = CheckFonts();
+    int fontlen=0;
+    for(auto f : cf) { if(f.first.length() > fontlen) fontlen = f.first.length(); };
+    for(auto f : cf) { printf("  %-*s - %s\n", fontlen, f.first.c_str(), f.second ? "Ok" : "NOT FOUND"); }
   }
 
   else if(strcmp(argv[1], "sanity") == 0) {
@@ -111,28 +110,59 @@ int main(int argc, char *argv[]) {
   }
 
   else if((strcmp(argv[1], "run") == 0) && (argc==5)) {
-    // verify the environment
-    //if(!checkFiles()) {
-    //  return 0;
-    //}
-
+    bool cannotPlay = false;
     std::string f1 = argv[2];
     std::string f2 = argv[3];
     std::string outpath = argv[4];
 
-    // make sure the lists exist
-    if(!fileExists(f1)) {
-      printf("ERROR: list not found - '%s'\n", f1.c_str());
-      return 1;
+    // verify we have the fonts
+    printf("Checking fonts...\n");
+    {
+      std::vector<std::pair<std::string,bool>> cf = CheckFonts();
+      int fontlen=0;
+      for(auto f : cf) { if(f.first.length() > fontlen) fontlen = f.first.length(); };
+      for(auto f : cf) {
+	printf("  %-*s - ", fontlen, f.first.c_str());
+	if(f.second) {
+	  printf("Ok\n");
+	} else {
+	  printf("\e[1;31mNOT FOUND\x1B[0m\n");
+	  cannotPlay = true;
+	}
+      }
     }
-    if(!fileExists(f2)) {
-      printf("ERROR: list not found - '%s'\n", f2.c_str());
-      return 1;
+
+    printf("\n");
+
+    // verify the lists are present and valid
+    printf("Checking lists...\n");
+    {
+
+      int listlen = f1.length();
+      if(f2.length() > listlen) { listlen = f2.length(); }
+      for(auto f : {f1, f2}) {
+	printf("  %-*s - ", listlen, f.c_str());
+	if(!fileExists(f)) {
+	  printf("\e[1;31mERROR\n    File not found\x1B[0m\n");
+	  cannotPlay = true;
+	} else {
+	  std::vector<std::string> issues = Squad(f).Verify();
+	  if(issues.size() > 0) {
+	    printf("\e[1;33mISSUES\x1B[0m\n");
+	    for(std::string i : issues) {
+	      printf("    \e[1;33m%s\x1B[0m\n", i.c_str());
+	    }
+	  } else {
+	    printf("Ok\n");
+	  }
+	}
+      }
+      if(cannotPlay) return 0;
     }
-    // verify the lists
-    VerifyList(f1);
-    VerifyList(f2);
+    printf("\n");
+
     // run the game
+    printf("Running game...\n");
     try{
       std::array<Squad, 2> players = { { Squad(f1), Squad(f2) } };
       Game g = Game(players, outpath);
