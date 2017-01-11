@@ -11,6 +11,8 @@ static void printOptions() {
     printf("Options:\n");
     printf("  check             - check for required files\n");;
     printf("  verify (L)        - verify the list (L)\n");
+    printf("  dump {L}          - dump the list to terminal\n");
+    printf("  dump {P} {F} {S}  - dump the specified pilot/faction/ship (xws keys)\n");
     printf("  gen {L} {I}       - generate image (I) for the list (L)\n");
     printf("  run {L1} {L2} {P} - run a game with the 2 specified lists, outputting images to the specified path\n");
 }
@@ -100,6 +102,11 @@ int main(int argc, char *argv[]) {
     sq.Dump();
   }
 
+  else if((strcmp(argv[1], "dump") == 0) && (argc==5)) {
+    Pilot::GetPilot(argv[2], argv[3], argv[4]).Dump();
+  }
+
+
   else if((strcmp(argv[1], "verify") == 0) && (argc==3)) {
     VerifyList(argv[2]);
   }
@@ -122,13 +129,13 @@ int main(int argc, char *argv[]) {
       int fontlen=0;
       for(auto f : cf) { if(f.first.length() > fontlen) fontlen = f.first.length(); };
       for(auto f : cf) {
-	printf("  %-*s - ", fontlen, f.first.c_str());
-	if(f.second) {
-	  printf("Ok\n");
-	} else {
-	  printf("\e[1;31mNOT FOUND\x1B[0m\n");
-	  cannotPlay = true;
-	}
+        printf("  %-*s - ", fontlen, f.first.c_str());
+        if(f.second) {
+          printf("Ok\n");
+        } else {
+          printf("\e[1;31mNOT FOUND\x1B[0m\n");
+          cannotPlay = true;
+        }
       }
     }
 
