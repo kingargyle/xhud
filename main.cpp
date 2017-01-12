@@ -23,6 +23,7 @@ static void printOptions() {
     printf("Options:\n");
     printf("  check             - check for required files\n");;
     printf("  ships             - prints all the ships\n");
+    printf("  ship {S}          - prints info about specified ship (xws key)\n");
     printf("  dump {L}          - dump the list to terminal\n");
     printf("  dump {P} {F} {S}  - dump the specified pilot/faction/ship (xws keys)\n");
     printf("  verify (L)        - verify the list (L)\n");
