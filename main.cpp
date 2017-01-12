@@ -2,8 +2,8 @@
 #include "game.h"
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <algorithm>
 #include <fstream>
-#include <map>
 #include <string.h>
 #include <unistd.h>
 
