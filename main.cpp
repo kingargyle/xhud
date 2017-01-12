@@ -3,6 +3,7 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 #include <fstream>
+#include <map>
 #include <string.h>
 #include <unistd.h>
 
@@ -10,9 +11,10 @@
 static void printOptions() {
     printf("Options:\n");
     printf("  check             - check for required files\n");;
-    printf("  verify (L)        - verify the list (L)\n");
+    printf("  ships             - prints all the ships\n");
     printf("  dump {L}          - dump the list to terminal\n");
     printf("  dump {P} {F} {S}  - dump the specified pilot/faction/ship (xws keys)\n");
+    printf("  verify (L)        - verify the list (L)\n");
     printf("  gen {L} {I}       - generate image (I) for the list (L)\n");
     printf("  run {L1} {L2} {P} - run a game with the 2 specified lists, outputting images to the specified path\n");
 }
@@ -75,6 +77,38 @@ bool VerifyList(std::string listFile) {
 }
 
 
+void PrintShip(std::string ship) {
+  /*
+    struct Stats{
+      int8_t at;
+      int8_t ag;
+      int8_t hu;
+      int8_t sh;
+      bool operator<(const Stats& st1) const { return (this->at + this->ag + this->hu + this->sh) > (st1.at + st1.ag + st1.hu + st1.sh); }
+    };
+  */
+  //std::map<Stats, std::vector<Pilot>> pilots;
+  std::vector<Pilot> pilots;
+  std::string name = "";
+  Act         act  = Act::None;
+  int nameLength = 0;
+  for(Pilot p : Pilot::GetAllPilots()) {
+    if(p.GetShipNameXws() == ship) {
+      if(name=="") name = p.GetShipName();
+      if(act==Act::None) act = p.GetNatActions();
+      if(nameLength < p.GetPilotName().length()) nameLength = p.GetPilotName().length();
+      pilots.push_back(p);
+    }
+  }
+
+  printf("%s\n", name.c_str());
+  for(auto p : pilots) {
+    printf("%*s |\n", nameLength, p.GetPilotName().c_str());
+  }
+    //std::sort(pilots.begin(), pilots.end(), [] (Pilot a, Pilot b) { return a.GetNatSkill() > b.GetNatSkill(); });
+
+}
+
 
 int main(int argc, char *argv[]) {
 
@@ -95,6 +129,21 @@ int main(int argc, char *argv[]) {
     printf("\n");
     Upgrade::SanityCheck();
     return 0;
+  }
+
+  else if(strcmp(argv[1], "ships") == 0) {
+    printf("%-30s %-30s\n", "Name", "xws key");
+    std::vector<std::string> done;
+    for(auto p : Pilot::GetAllPilots()) {
+      if(std::find(done.begin(), done.end(), p.GetShipNameXws()) == done.end()) {
+        done.push_back(p.GetShipNameXws());
+        printf(" %-30s %-30s\n", p.GetShipName().c_str(), p.GetShipNameXws().c_str());
+      }
+    }
+  }
+
+  else if((strcmp(argv[1], "ship") == 0) && (argc == 3)) {
+    PrintShip(argv[2]);
   }
 
   else if((strcmp(argv[1], "dump") == 0) && (argc==3)) {
