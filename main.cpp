@@ -169,7 +169,10 @@ void PrintShip(std::string ship) {
     }
   }
 
-  std::sort(pilots.begin(), pilots.end(), [] (Pilot a, Pilot b) { return a.GetNatSkill() > b.GetNatSkill(); });
+  std::sort(pilots.begin(), pilots.end(), [] (Pilot a, Pilot b) {
+      
+      return a.GetFaction() < b.GetFaction() || ((a.GetFaction() == b.GetFaction()) && (a.GetNatSkill() > b.GetNatSkill()));
+    });
 
   printf(WHITE "%s\n" NORMAL, name.c_str());
 
@@ -178,7 +181,7 @@ void PrintShip(std::string ship) {
   printf("\n");
 
   for(auto p : pilots) {
-    printf(WHITE"%-6s" BROWN"%-2d" WHITE" %-*s" GRAY" [%-2d]" RED"  %-2d" GREEN" %-2d" YELLOW" %-2d" CYAN" %-2d" WHITE,
+    printf(WHITE"%-6s" BROWN" %-2d" WHITE" %-*s" GRAY" [%-2d]" RED"  %-2d" GREEN" %-2d" YELLOW" %-2d" CYAN" %-2d" WHITE,
            (p.GetFaction() == Faction::Empire) ? "Empire" : (p.GetFaction() == Faction::Rebel) ? "Rebel" : "Scum",
            p.GetNatSkill(), nameLength, p.GetPilotName().c_str(), p.GetNatCost(),
            p.GetNatAttack(), p.GetNatAgility(), p.GetNatHull(), p.GetNatShield());
