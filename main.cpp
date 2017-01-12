@@ -7,6 +7,17 @@
 #include <string.h>
 #include <unistd.h>
 
+#define NORMAL "\x1B[0m"
+#define GRAY   "\e[0;37m"
+#define WHITE  "\e[1;37m"
+#define BROWN  "\e[0;33m"
+#define RED    "\e[1;31m"
+#define GREEN  "\e[1;32m"
+#define YELLOW "\e[1;33m"
+#define BLUE   "\e[1;34m"
+#define CYAN   "\e[1;36m"
+
+
 
 static void printOptions() {
     printf("Options:\n");
@@ -77,35 +88,110 @@ bool VerifyList(std::string listFile) {
 }
 
 
+
+static bool FindManeuver(Maneuvers maneuvers, uint8_t speed, Bearing bearing, Maneuver &maneuver) {
+  for(auto m : maneuvers) {
+    if((m.speed == speed) && (m.bearing == bearing)) {
+      maneuver = m;
+      return true;
+    }
+  }
+  return false;
+}
+
+static std::string GetDifficultyColor(Difficulty d) {
+  switch(d) {
+  case Difficulty::Green: return GREEN;
+  case Difficulty::White: return WHITE;
+  case Difficulty::Red:   return RED;
+  }
+}
+
+static std::string GetBearingSymbol(Bearing b) {
+  switch(b) {
+  case Bearing::LTurn:      return "↰";
+  case Bearing::LBank:      return "↖";
+  case Bearing::Straight:   return "↑";
+  case Bearing::Stationary: return "■";
+  case Bearing::RBank:      return "↗";
+  case Bearing::RTurn:      return "↱";
+  case Bearing::KTurn:      return "K";
+  case Bearing::LSloop:     return "↖";
+  case Bearing::RSloop:     return "↗";
+  case Bearing::LTroll:     return "↰";
+  case Bearing::RTroll:     return "↱";
+  default:                  return "?";
+  }
+}
+
+void PrintManeuverChart(Maneuvers maneuvers) {
+  int8_t min = 10;
+  int8_t max = -10;
+  for(auto a : maneuvers) { if(a.speed > max) {max = a.speed;} if(a.speed < min) {min=a.speed;} }
+
+  Maneuver m;
+  for(int i=max; i>=min; i--) {
+    printf(WHITE"%2d|", i);
+
+    // standard maneuvers
+    for(Bearing b : {Bearing::LTurn, Bearing::LBank, (i==0) ? Bearing::Stationary : Bearing::Straight, Bearing::RBank, Bearing::RTurn}) {
+      if(FindManeuver(maneuvers, i, b, m)) {
+        printf(" %s%s%s", GetDifficultyColor(m.difficulty).c_str(), GetBearingSymbol(m.bearing).c_str(), NORMAL);
+      } else {
+        printf("  ");
+      }
+    }
+
+    // special maneuvers
+    for(Bearing b : {Bearing::KTurn, Bearing::LSloop, Bearing::RSloop, Bearing::LTroll, Bearing::RTroll}) {
+      if(FindManeuver(maneuvers, i, b, m)) {
+        printf(" %s%s%s", GetDifficultyColor(m.difficulty).c_str(), GetBearingSymbol(m.bearing).c_str(), NORMAL);
+      }
+    }
+
+    printf("\n");
+  }
+}
+
 void PrintShip(std::string ship) {
-  /*
-    struct Stats{
-      int8_t at;
-      int8_t ag;
-      int8_t hu;
-      int8_t sh;
-      bool operator<(const Stats& st1) const { return (this->at + this->ag + this->hu + this->sh) > (st1.at + st1.ag + st1.hu + st1.sh); }
-    };
-  */
-  //std::map<Stats, std::vector<Pilot>> pilots;
   std::vector<Pilot> pilots;
   std::string name = "";
   Act         act  = Act::None;
   int nameLength = 0;
+  Maneuvers maneuvers;
   for(Pilot p : Pilot::GetAllPilots()) {
     if(p.GetShipNameXws() == ship) {
       if(name=="") name = p.GetShipName();
       if(act==Act::None) act = p.GetNatActions();
       if(nameLength < p.GetPilotName().length()) nameLength = p.GetPilotName().length();
+      if(maneuvers.size() == 0) maneuvers = p.GetManeuvers();
       pilots.push_back(p);
     }
   }
 
-  printf("%s\n", name.c_str());
+  std::sort(pilots.begin(), pilots.end(), [] (Pilot a, Pilot b) { return a.GetNatSkill() > b.GetNatSkill(); });
+
+  printf(WHITE "%s\n" NORMAL, name.c_str());
+
+  printf("\n");
+  PrintManeuverChart(maneuvers);
+  printf("\n");
+
   for(auto p : pilots) {
-    printf("%*s |\n", nameLength, p.GetPilotName().c_str());
+    printf(WHITE"%-6s" BROWN"%-2d" WHITE" %-*s" GRAY" [%-2d]" RED"  %-2d" GREEN" %-2d" YELLOW" %-2d" CYAN" %-2d" WHITE,
+           (p.GetFaction() == Faction::Empire) ? "Empire" : (p.GetFaction() == Faction::Rebel) ? "Rebel" : "Scum",
+           p.GetNatSkill(), nameLength, p.GetPilotName().c_str(), p.GetNatCost(),
+           p.GetNatAttack(), p.GetNatAgility(), p.GetNatHull(), p.GetNatShield());
+
+    printf(" - ");
+    ForEachAction(p.GetNatActions(), [](Act a) {printf("[%s]", ActToString(a).c_str());});
+    printf(" - ");
+    for(Upg u : p.GetNatPossibleUpgrades()) {
+      printf("[%s]", UpgToString(u).c_str());
+    }
+    printf(NORMAL"\n");
+
   }
-    //std::sort(pilots.begin(), pilots.end(), [] (Pilot a, Pilot b) { return a.GetNatSkill() > b.GetNatSkill(); });
 
 }
 
