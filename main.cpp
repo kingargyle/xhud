@@ -24,6 +24,7 @@ static void printOptions() {
     printf("  check             - check for required files\n");;
     printf("  ships             - prints all the ships\n");
     printf("  ship {S}          - prints info about specified ship (xws key)\n");
+    printf("  upgrades          - prints all the upgrades\n");
     printf("  dump {L}          - dump the list to terminal\n");
     printf("  dump {P} {F} {S}  - dump the specified pilot/faction/ship (xws keys)\n");
     printf("  verify (L)        - verify the list (L)\n");
@@ -177,10 +178,21 @@ void PrintShip(std::string ship) {
 
   printf(WHITE "%s\n" NORMAL, name.c_str());
 
+  // print the maneuver chart
   printf("\n");
   PrintManeuverChart(maneuvers);
   printf("\n");
 
+  // see if any of the ships have EPT
+  bool shipHasEpt = false;
+  for(auto p : pilots) {
+    for(Upg u : p.GetNatPossibleUpgrades()) {
+      if(u == Upg::Elite) { shipHasEpt = true; break; }
+    }
+    if(shipHasEpt) break;
+  }
+
+  // print the info
   for(auto p : pilots) {
     printf(WHITE"%-6s" BROWN" %-2d" WHITE" %-*s" GRAY" [%-2d]" RED"  %-2d" GREEN" %-2d" YELLOW" %-2d" CYAN" %-2d" WHITE,
            (p.GetFaction() == Faction::Empire) ? "Empire" : (p.GetFaction() == Faction::Rebel) ? "Rebel" : "Scum",
@@ -190,9 +202,22 @@ void PrintShip(std::string ship) {
     printf(" - ");
     ForEachAction(p.GetNatActions(), [](Act a) {printf("[%s]", ActToString(a).c_str());});
     printf(" - ");
+
+    int c = 0;
     for(Upg u : p.GetNatPossibleUpgrades()) {
+      // if theres an EPT but not for this pilot, leave a space for it
+      if(shipHasEpt && (c==2) && u != Upg::Elite) { printf("     "); }
       printf("[%s]", UpgToString(u).c_str());
+      c++;
     }
+    if(shipHasEpt && (c==2)) {
+      printf("     "); // stupid edge case...
+    }
+
+    if(p.GetHasAbility()) {
+      printf(" - %s", p.GetText().c_str());
+    }
+
     printf(NORMAL"\n");
 
   }
@@ -234,6 +259,13 @@ int main(int argc, char *argv[]) {
 
   else if((strcmp(argv[1], "ship") == 0) && (argc == 3)) {
     PrintShip(argv[2]);
+  }
+
+  else if(strcmp(argv[1], "upgrades") == 0) {
+    printf("%-10s %-30s %-30s\n", "Type", "Name", "xws key");
+    for(auto u : Upgrade::GetAllUpgrades()) {
+      printf(" %-10s %-30s %-30s\n", UpgToString(u.GetType()).c_str(), u.GetUpgradeName().c_str(), u.GetUpgradeNameXws().c_str());
+    }
   }
 
   else if((strcmp(argv[1], "dump") == 0) && (argc==3)) {
