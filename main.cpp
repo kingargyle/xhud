@@ -5,7 +5,6 @@
 #include <algorithm>
 #include <fstream>
 #include <string.h>
-#include <unistd.h>
 
 #define NORMAL "\x1B[0m"
 #define GRAY   "\e[0;37m"
