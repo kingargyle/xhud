@@ -90,7 +90,7 @@ bool VerifyList(std::string listFile) {
 
 
 
-static bool FindManeuver(Maneuvers maneuvers, uint8_t speed, Bearing bearing, Maneuver &maneuver) {
+static bool FindManeuver(Maneuvers maneuvers, int8_t speed, Bearing bearing, Maneuver &maneuver) {
   for(auto m : maneuvers) {
     if((m.speed == speed) && (m.bearing == bearing)) {
       maneuver = m;
