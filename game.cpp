@@ -6,6 +6,9 @@
 
 Game::Game(std::array<Squad, 2>& p, std::string op)
   : players(p), outPath(op), isRunning(true) {
+  if(this->outPath[this->outPath.length()-1] != '/') {
+    this->outPath += "/";
+  }
 }
 
 void Game::Run() {
