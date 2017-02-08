@@ -308,35 +308,59 @@ int main(int argc, char *argv[]) {
         }
       }
     }
-
     printf("\n");
 
     // verify the lists are present and valid
     printf("Checking lists...\n");
     {
-
       int listlen = f1.length();
       if(f2.length() > listlen) { listlen = f2.length(); }
       for(auto f : {f1, f2}) {
-	printf("  %-*s - ", listlen, f.c_str());
-	if(!fileExists(f)) {
-	  printf("\e[1;31mERROR\n    File not found\x1B[0m\n");
-	  cannotPlay = true;
-	} else {
-	  std::vector<std::string> issues = Squad(f).Verify();
-	  if(issues.size() > 0) {
-	    printf("\e[1;33mISSUES\x1B[0m\n");
-	    for(std::string i : issues) {
-	      printf("    \e[1;33m%s\x1B[0m\n", i.c_str());
-	    }
-	  } else {
-	    printf("Ok\n");
-	  }
-	}
+        printf("  %-*s - ", listlen, f.c_str());
+        if(!fileExists(f)) {
+          printf("\e[1;31mERROR\n    File not found\x1B[0m\n");
+          cannotPlay = true;
+        } else {
+          std::vector<std::string> issues = Squad(f).Verify();
+          if(issues.size() > 0) {
+            printf("\e[1;33mISSUES\x1B[0m\n");
+            for(std::string i : issues) {
+              printf("    \e[1;33m%s\x1B[0m\n", i.c_str());
+            }
+          } else {
+            printf("Ok\n");
+          }
+        }
       }
-      if(cannotPlay) return 0;
     }
     printf("\n");
+
+    // verify target directory is ok
+    printf("Checking target dir...\n");
+    {
+      struct stat s;
+      bool done = false;
+      printf("  Target directory exists       - ");
+      if(stat(outpath.c_str(), &s) != 0) {
+        printf("\e[1;31mERROR\x1B[0m\n");
+        cannotPlay = done = true;
+      } else {
+        printf("Ok\n");
+      }
+
+      if(!done) {
+        printf("  Target directory is directory - ");
+        if(!S_ISDIR(s.st_mode)) {
+          printf("\e[1;31mERROR\x1B[0m\n");
+          cannotPlay = done = true;
+        } else {
+          printf("Ok\n");
+        }
+      }
+    }
+    printf("\n");
+
+    if(cannotPlay) return 0;
 
     // run the game
     printf("Running game...\n");
