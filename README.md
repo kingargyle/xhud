@@ -50,10 +50,10 @@ Verify it works
 Use it
   - './xhud' to show all options
   - './xhud ships' to show all ships
-  - './xbus ship tiefighter' to show all info on TIE Fighters
+  - './xbus ship tiefighter' to show all info on a TIE Fighter
   - './xhud dump list.xws' do have it dump the contents of 'list.xws' to the terminal
   - './xhud gen list.xws img.png' to have it create 'img.png' from 'list.xws'
-  - './xhud run p1.xws p2.xws' to run a game with the 2 specified lists.
-                               this generates 'p1.png' and 'p2.png' for streaming
-                               from the xhud> prompt, enter '?' for help on commands
+  - './xhud run p1.xws p2.xws ./' to run a game with the 2 specified lists.
+                                  this generates 'p1.png' and 'p2.png' in the same location as the program
+                                  from the xhud> prompt, enter '?' for help on commands
   
