@@ -245,6 +245,10 @@ int main(int argc, char *argv[]) {
     return 0;
   }
 
+  else if((strcmp(argv[1], "listtest") == 0) && (argc == 3)) {
+    RunTestXwsFiles(argv[2]);
+  }
+
   else if(strcmp(argv[1], "ships") == 0) {
     printf("%-30s %-30s\n", "Name", "xws key");
     std::vector<std::string> done;
