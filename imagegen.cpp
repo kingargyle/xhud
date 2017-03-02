@@ -260,8 +260,7 @@ void GenerateImage(Squad& squad, std::string name) {
   gdImageSaveAlpha(img, 1);
   gdImageAlphaBlending(img, 0); // clear to enable transparent background
   for(int i=0; i<WIDTH; i++) {
-    int color = gdImageColorAllocateAlpha(img, 0, 0, 0, 127);
-    gdImageLine(img, i, 0, i, HEIGHT-1, color);
+    gdImageLine(img, i, 0, i, HEIGHT-1, colors.bg);
   }
   gdImageAlphaBlending(img, 1); // now that background is drawn, set this again to make fonts prettier
 
